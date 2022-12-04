@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from groups.serializers import GroupSerializer
 from traits.serializers import TraitSerializer
-from pets.models import Pet
+from .models import Pet
 from traits.models import Trait
 from groups.models import Group
 
@@ -18,26 +18,27 @@ class PetSerializer(serializers.Serializer):
 
     def create(self, validated_data: dict) -> Pet:
 
-        traits_dict = validated_data.pop('trait')
-        group_dict = validated_data.pop('group')
+        traits_dict = validated_data.pop("trait")
+        group_dict = validated_data.pop("group")
 
         pet = Pet.objects.get_or_create(**validated_data)
 
         for traits in traits_dict:
             traits_obj = Trait.objects.get_or_create(**traits)
 
-            # traits_obj.pets.add(pet)
             pet.traits.add(traits_obj[0])
 
-        # AVALIAR A NECESSIDADE 
-        Group.objects.get_or_create(group_dict, pets=pet)
+        for group in group_dict:
+            groups_obj = Group.objects.get_or_create(**group)
+
+            pet.group.add(groups_obj[0])
 
         return pet
 
     def update(self, instance: Pet, validated_data: dict):
 
-        traits_dict: dict = validated_data.pop('trait', None)
-        group_dict: dict = validated_data.pop('group', None)
+        traits_dict: dict = validated_data.pop("trait", None)
+        group_dict: dict = validated_data.pop("group", None)
 
         pet_obj, created = Pet.objects.get_or_create(pet=instance)
 
