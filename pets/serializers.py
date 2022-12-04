@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from ..groups.serializers import GroupsSerializer
-from ..traits.serializers import TraitsSerializer
+from groups.serializers import GroupSerializer
+from traits.serializers import TraitSerializer
 
 
 class PetSerializer(serializers.Serializer):
@@ -9,5 +9,5 @@ class PetSerializer(serializers.Serializer):
     age = serializers.IntegerField()
     weight = serializers.IntegerField()
     sex = serializers.CharField()
-    groups = GroupsSerializer(many=True, read_only=True)
-    traits = TraitsSerializer(many=True, read_only=True)
+    groups = GroupSerializer(many=True, read_only=True)
+    traits = TraitSerializer(many=True, read_only=True)
