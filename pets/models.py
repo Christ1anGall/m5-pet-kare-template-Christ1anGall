@@ -17,7 +17,7 @@ class Pet(models.Model):
         choices=SexChoices.choices,
     )
 
-    traits = models.ManyToManyField("traits.Trait", related_name="Traits")
+    traits = models.ManyToManyField("traits.Trait", related_name="traits")
 
     def __repr__(self):
         return f"<[{self.id}]-{self.name} - {self.sex} - age: {self.age} >"

@@ -20,23 +20,17 @@ class PetSerializer(serializers.Serializer):
 
         traits_dict = validated_data.pop("traits")
         group_dict = validated_data.pop("group")
-        group_obj = Group.objects.create(**group_dict)
-        print('-' * 200)
-        print(group_obj)
-        print('-' * 200)
-        pet = Pet.objects.create(**validated_data)
 
-        """         for traits in traits_dict:
-            traits_obj = Trait.objects.get_or_create(**traits)
+        pet_obj = Pet.objects.create(**validated_data)
 
-            pet.traits.add(traits_obj[0])
+        Group.objects.get_or_create(**group_dict, pets=pet_obj)
 
-        for group in group_dict:
-            groups_obj = Group.objects.get_or_create(**group)
+        for traits in traits_dict:
+            traits_obj = Trait.objects.get_or_create(**traits, )
 
-            pet.group.add(groups_obj[0]) """
+            pet_obj.traits.add(traits_obj[0])
 
-        return pet
+        return pet_obj
 
     def update(self, instance: Pet, validated_data: dict):
 
