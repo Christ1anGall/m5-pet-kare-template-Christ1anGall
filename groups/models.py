@@ -10,9 +10,7 @@ class Group(models.Model):
         "pets.Pet", related_name="group", on_delete=models.DO_NOTHING
     )
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.create_at = timezone.now()
+
 
     def __repr__(self):
         return f"<[{self.id}] {self.scientific_name}>"

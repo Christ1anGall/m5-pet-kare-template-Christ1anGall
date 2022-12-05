@@ -23,10 +23,10 @@ class PetSerializer(serializers.Serializer):
 
         pet_obj = Pet.objects.create(**validated_data)
 
-        Group.objects.get_or_create(**group_dict, pets=pet_obj)
+        group_objt = Group.objects.get_or_create(**group_dict, pets=pet_obj)
 
         for traits in traits_dict:
-            traits_obj = Trait.objects.get_or_create(**traits, )
+            traits_obj = Trait.objects.get_or_create(**traits)
 
             pet_obj.traits.add(traits_obj[0])
 
