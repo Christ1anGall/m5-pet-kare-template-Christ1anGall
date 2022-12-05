@@ -18,12 +18,15 @@ class PetSerializer(serializers.Serializer):
 
     def create(self, validated_data: dict) -> Pet:
 
-        traits_dict = validated_data.pop("trait")
+        traits_dict = validated_data.pop("traits")
         group_dict = validated_data.pop("group")
+        group_obj = Group.objects.create(**group_dict)
+        print('-' * 200)
+        print(group_obj)
+        print('-' * 200)
+        pet = Pet.objects.create(**validated_data)
 
-        pet = Pet.objects.get_or_create(**validated_data)
-
-        for traits in traits_dict:
+        """         for traits in traits_dict:
             traits_obj = Trait.objects.get_or_create(**traits)
 
             pet.traits.add(traits_obj[0])
@@ -31,7 +34,7 @@ class PetSerializer(serializers.Serializer):
         for group in group_dict:
             groups_obj = Group.objects.get_or_create(**group)
 
-            pet.group.add(groups_obj[0])
+            pet.group.add(groups_obj[0]) """
 
         return pet
 
